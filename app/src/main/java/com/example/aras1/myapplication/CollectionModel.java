@@ -1,16 +1,15 @@
 package com.example.aras1.myapplication;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class CollectionModel
     {
-    HashMap<String, String> content;
+    LinkedHashMap<String, String> content;
     private String name;
 
-    CollectionModel(String name)
+    public CollectionModel(String name)
         {
-        content = new HashMap<>();
+        content = new LinkedHashMap<>(40);
         this.name=name;
         }
 
@@ -20,5 +19,9 @@ public class CollectionModel
         content.put(front,reverse);
         }
 
-
+    @Override
+    public String toString()
+        {
+        return Integer.toString(content.size());
+        }
     }

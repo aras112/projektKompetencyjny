@@ -6,6 +6,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aras1.myapplication.xml.XMLReaderUtil;
 import com.example.aras1.myapplication.xml.XMLWriterUtil;
 
 import java.io.File;
@@ -23,6 +24,7 @@ public class AddActivityController
     Boolean isFileReady = false;
     TextView countView;
     Integer count = 0;
+    File collection;
 
     AddActivityController(AddActivity activity)
         {
@@ -101,7 +103,7 @@ public class AddActivityController
             directory.mkdirs();
             }
 
-        File collection = new File(path + "/" + collectionName.getText().toString().trim() + ".xml");
+        collection = new File(path + "/" + collectionName.getText().toString().trim() + ".xml");
 
         try
             {

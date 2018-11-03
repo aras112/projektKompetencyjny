@@ -88,7 +88,6 @@ public class XMLWriterUtil
             {
             try
                 {
-                logger.log(Level.CONFIG, "123");
                 writer.writeEndElement();
                 writer.writeEndDocument();
                 isReadyToStartWriting = false;
