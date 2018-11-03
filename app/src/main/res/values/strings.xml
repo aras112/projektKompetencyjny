@@ -9,5 +9,6 @@
     <string name="fieldsError">Pole nie może być puste</string>
     <string name="countAdded">Liczba dodanych fiszek</string>
     <string name="messageAfterAdd">Dodano kolekcje</string>
+    <string name="createCollection">Dodaj kolekcje</string>
 
 </resources>
