@@ -5,4 +5,9 @@
     <string name="tape">Podaj nazwę fiszki</string>
     <string name="tapeReverse">Podaj ukrytą treść</string>
     <string name="descriptoinButton1">Dodaj fiszke</string>
+    <string name="titleError">Podaj nazwe kolekcji</string>
+    <string name="fieldsError">Pole nie może być puste</string>
+    <string name="countAdded">Liczba dodanych fiszek</string>
+    <string name="messageAfterAdd">Dodano kolekcje</string>
+
 </resources>
