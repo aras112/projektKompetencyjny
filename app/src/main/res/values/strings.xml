@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="ok">OK</string>
+    <string name="ok">Zapisz kolekcje</string>
     <string name="name">Nazwa kolekcji</string>
     <string name="tape">Podaj nazwę fiszki</string>
     <string name="tapeReverse">Podaj ukrytą treść</string>
@@ -10,5 +10,16 @@
     <string name="countAdded">Liczba dodanych fiszek</string>
     <string name="messageAfterAdd">Dodano kolekcje</string>
     <string name="createCollection">Dodaj kolekcje</string>
+    <string name="openCollection">Otwórz kolekcję</string>
+    <string name="Statistics">Statystyki</string>
+    <string name="connectionNameField">Nazwa kolekcji</string>
+    <string name="OKButton">OK</string>
+    <string name="heads">Pytanie</string>
+    <string name="Tails">Ukryta treść</string>
+    <string name="saveCollection">Zapisz kolekcje</string>
+    <string name="chooseCollection">Wybierz kolekcję</string>
+    <string name="progress">Postępy w nauce</string>
+    <string name="rewards">Odznaczenia</string>
+    <string name="tips">Porady</string>
 
 </resources>

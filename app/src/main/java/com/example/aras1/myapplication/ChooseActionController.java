@@ -18,7 +18,7 @@ public class ChooseActionController
     void init()
         {
 
-        addCollection = action.findViewById(R.id.createCollection);
+        addCollection = action.findViewById(R.id.addCollection);
 
         addCollection.setOnClickListener(
                 (view) ->

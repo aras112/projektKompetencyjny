@@ -35,7 +35,7 @@ public class AddActivityController
     void init()
         {
         front = activity.findViewById(R.id.textFront);
-        reverse = activity.findViewById(R.id.textReserve);
+        reverse = activity.findViewById(R.id.textReverse);
         addNewItem = activity.findViewById(R.id.addNew);
         collectionName = activity.findViewById(R.id.tapeCollectionName);
         saveCollection = activity.findViewById(R.id.addNewCollection);
