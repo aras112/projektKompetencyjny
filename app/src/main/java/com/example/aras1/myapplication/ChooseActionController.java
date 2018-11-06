@@ -8,6 +8,7 @@ public class ChooseActionController {
     ChooseAction action;
     Button addCollection;
     Button openCollection;
+    Button statistics;
 
     public ChooseActionController(ChooseAction action) {
         this.action = action;
@@ -18,6 +19,7 @@ public class ChooseActionController {
 
         addCollection = action.findViewById(R.id.addCollection);
         openCollection = action.findViewById(R.id.openCollection);
+        statistics = action.findViewById(R.id.statistics);
 
         addCollection.setOnClickListener(
                 (view) ->
@@ -36,6 +38,17 @@ public class ChooseActionController {
                 {
 
                     Intent newIntent = new Intent(action, OpenActivity.class);
+                    action.startActivity(newIntent);
+
+                }
+
+        );
+
+        statistics.setOnClickListener(
+                (view) ->
+                {
+
+                    Intent newIntent = new Intent(action, StatisticsActivity.class);
                     action.startActivity(newIntent);
 
                 }
