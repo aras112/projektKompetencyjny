@@ -21,5 +21,6 @@
     <string name="progress">Postępy w nauce</string>
     <string name="rewards">Odznaczenia</string>
     <string name="tips">Porady</string>
+    <string name="tapLabel">Dotnik na fiszkę po odpowiedź</string>
 
 </resources>

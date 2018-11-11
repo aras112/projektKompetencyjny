@@ -1,6 +1,7 @@
 package com.example.aras1.myapplication;
 
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -12,8 +13,7 @@ import com.example.aras1.myapplication.xml.XMLWriterUtil;
 import java.io.File;
 import java.io.IOException;
 
-public class AddActivityController
-    {
+public class AddActivityController {
     AddActivity activity;
     TextView front;
     TextView reverse;
@@ -25,15 +25,16 @@ public class AddActivityController
     TextView countView;
     Integer count = 0;
     File collection;
+    ImageButton frontImage;
+    ImageButton reverseImage;
 
-    AddActivityController(AddActivity activity)
-        {
+
+    AddActivityController(AddActivity activity) {
         this.activity = activity;
         init();
-        }
+    }
 
-    void init()
-        {
+    void init() {
         front = activity.findViewById(R.id.textFront);
         reverse = activity.findViewById(R.id.textReverse);
         addNewItem = activity.findViewById(R.id.addNew);
@@ -41,105 +42,105 @@ public class AddActivityController
         saveCollection = activity.findViewById(R.id.addNewCollection);
         countView = activity.findViewById(R.id.count);
         countView.setText(activity.getText(R.string.countAdded) + " " + count);
+        frontImage = activity.findViewById(R.id.frontImage);
+        reverseImage = activity.findViewById(R.id.reverseImage);
 
         addNewItem.setOnClickListener(
                 (view) ->
                 {
-                addItem();
+                    addItem();
                 }
         );
 
         saveCollection.setOnClickListener(
                 (view) ->
                 {
-                finish();
+                    finish();
+                }
+        );
+
+        frontImage.setOnClickListener(
+                (view) ->
+                {
+
+                }
+        );
+
+        reverseImage.setOnClickListener(
+                (view) ->
+                {
+
                 }
         );
 
 
-        }
+    }
 
-    void addItem()
-        {
+    void addItem() {
 
-        if (titleIsEmpty())
-            {
+        if (titleIsEmpty()) {
             showMessage();
-            } else
-            {
+        } else {
 
-            if (!isFileReady)
-                {
+            if (!isFileReady) {
                 prepareFile();
-                }
+            }
 
-            if (!fieldIsNull())
-                {
+            if (!fieldIsNull()) {
                 collectionWriter.writeItem(front.getText().toString(), reverse.getText().toString());
                 count++;
                 countView.setText(activity.getText(R.string.countAdded) + " " + count);
-                } else
-                {
+            } else {
                 showMessageForFileds();
-                }
             }
-
-        }
-
-    boolean titleIsEmpty()
-        {
-
-        return collectionName.getText().toString().trim().equals("");
-
-        }
-
-    void prepareFile()
-        {
-        String path = Environment.getExternalStorageDirectory().getPath() + "/" + activity.getString(R.string.app_name);
-        File directory = new File(path);
-
-        if (!directory.exists())
-            {
-            directory.mkdirs();
-            }
-
-        collection = new File(path + "/" + collectionName.getText().toString().trim() + ".xml");
-
-        try
-            {
-            collectionWriter = new XMLWriterUtil(collection);
-            }
-        catch (IOException e)
-            {
-            e.printStackTrace();
-            }
-
-        collectionWriter.prepareToWrite();
-        isFileReady = true;
-        }
-
-    void showMessage()
-        {
-        Toast.makeText(activity, activity.getString(R.string.titleError), Toast.LENGTH_LONG).show();
-        }
-
-    void showMessageForFileds()
-        {
-        Toast.makeText(activity, activity.getString(R.string.fieldsError), Toast.LENGTH_LONG).show();
-        }
-
-    boolean fieldIsNull()
-        {
-        return (front.getText().toString().trim().equals("") || reverse.getText().toString().trim().equals(""));
-        }
-
-    void finish()
-        {
-        collectionWriter.endWrite();
-        Toast.makeText(activity, activity.getString(R.string.messageAfterAdd), Toast.LENGTH_LONG).show();
         }
 
     }
+
+    boolean titleIsEmpty() {
+
+        return collectionName.getText().toString().trim().equals("");
+
+    }
+
+    void prepareFile() {
+        String path = Environment.getExternalStorageDirectory().getPath() + "/" + activity.getString(R.string.app_name);
+        File directory = new File(path);
+
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        collection = new File(path + "/" + collectionName.getText().toString().trim() + ".xml");
+
+        try {
+            collectionWriter = new XMLWriterUtil(collection);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        collectionWriter.prepareToWrite();
+        isFileReady = true;
+    }
+
+    void showMessage() {
+        Toast.makeText(activity, activity.getString(R.string.titleError), Toast.LENGTH_LONG).show();
+    }
+
+    void showMessageForFileds() {
+        Toast.makeText(activity, activity.getString(R.string.fieldsError), Toast.LENGTH_LONG).show();
+    }
+
+    boolean fieldIsNull() {
+        return (front.getText().toString().trim().equals("") || reverse.getText().toString().trim().equals(""));
+    }
+
+    void finish() {
+        collectionWriter.endWrite();
+        Toast.makeText(activity, activity.getString(R.string.messageAfterAdd), Toast.LENGTH_LONG).show();
+    }
+
+}
 
 
 
