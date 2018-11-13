@@ -1,4 +1,4 @@
-package com.example.aras1.myapplication;
+package com.example.aras1.myapplication.model;
 
 import java.util.LinkedHashMap;
 

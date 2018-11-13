@@ -1,10 +1,15 @@
-package com.example.aras1.myapplication;
+package com.example.aras1.myapplication.controller;
 
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.aras1.myapplication.FlashcardItem;
+import com.example.aras1.myapplication.FlashcardListAdapter;
+import com.example.aras1.myapplication.OpenActivity;
+import com.example.aras1.myapplication.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,7 +24,7 @@ public class OpenActivityController
     private FlashcardListAdapter adapter;
     private List<FlashcardItem> flashcardList;
 
-    OpenActivityController(OpenActivity activity)
+    public OpenActivityController(OpenActivity activity)
         {
         this.activity = activity;
         init();

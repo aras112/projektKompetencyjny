@@ -2,10 +2,8 @@ package com.example.aras1.myapplication;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+
+import com.example.aras1.myapplication.controller.BrowseActivityController;
 
 
 public class BrowseActivity extends AppCompatActivity {

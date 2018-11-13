@@ -3,6 +3,8 @@ package com.example.aras1.myapplication;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.aras1.myapplication.controller.ChooseActionController;
+
 public class ChooseAction extends AppCompatActivity
     {
 

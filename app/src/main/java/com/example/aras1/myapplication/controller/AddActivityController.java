@@ -1,4 +1,4 @@
-package com.example.aras1.myapplication;
+package com.example.aras1.myapplication.controller;
 
 import android.os.Environment;
 import android.util.Log;
@@ -7,6 +7,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aras1.myapplication.AddActivity;
+import com.example.aras1.myapplication.R;
 import com.example.aras1.myapplication.xml.XMLReaderUtil;
 import com.example.aras1.myapplication.xml.XMLWriterUtil;
 
@@ -29,7 +31,7 @@ public class AddActivityController {
     ImageButton reverseImage;
 
 
-    AddActivityController(AddActivity activity) {
+    public AddActivityController(AddActivity activity) {
         this.activity = activity;
         init();
     }

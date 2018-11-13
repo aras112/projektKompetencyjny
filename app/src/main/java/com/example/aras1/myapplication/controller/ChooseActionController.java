@@ -1,7 +1,13 @@
-package com.example.aras1.myapplication;
+package com.example.aras1.myapplication.controller;
 
 import android.content.Intent;
 import android.widget.Button;
+
+import com.example.aras1.myapplication.AddActivity;
+import com.example.aras1.myapplication.ChooseAction;
+import com.example.aras1.myapplication.OpenActivity;
+import com.example.aras1.myapplication.R;
+import com.example.aras1.myapplication.StatisticsActivity;
 
 public class ChooseActionController {
 

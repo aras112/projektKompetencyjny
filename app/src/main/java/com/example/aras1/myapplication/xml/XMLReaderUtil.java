@@ -1,6 +1,6 @@
 package com.example.aras1.myapplication.xml;
 
-import com.example.aras1.myapplication.CollectionModel;
+import com.example.aras1.myapplication.model.CollectionModel;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

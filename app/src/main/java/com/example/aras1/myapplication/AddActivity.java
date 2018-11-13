@@ -1,14 +1,9 @@
 package com.example.aras1.myapplication;
 
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
-import java.io.File;
-import java.io.IOException;
+import com.example.aras1.myapplication.controller.AddActivityController;
 
 public class AddActivity extends AppCompatActivity
     {

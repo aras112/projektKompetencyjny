@@ -1,8 +1,11 @@
-package com.example.aras1.myapplication;
+package com.example.aras1.myapplication.controller;
 
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.example.aras1.myapplication.BrowseActivity;
+import com.example.aras1.myapplication.R;
 
 public class BrowseActivityController {
 
