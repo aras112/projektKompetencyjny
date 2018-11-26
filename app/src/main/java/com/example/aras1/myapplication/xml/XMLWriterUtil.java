@@ -1,5 +1,7 @@
 package com.example.aras1.myapplication.xml;
 
+import android.util.Log;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,16 +24,13 @@ public class XMLWriterUtil
 
     public XMLWriterUtil(File file) throws IOException
         {
-        logger.setLevel(Level.FINEST);
-
         try
             {
             writer = factory.createXMLStreamWriter(new FileOutputStream(file));
             }
         catch (XMLStreamException e)
             {
-            logger.log(Level.WARNING, "XML error in constructor");
-            throw new RuntimeException("123");
+            Log.e(e.getMessage(),"XMLe");
             }
         }
 
@@ -48,7 +47,7 @@ public class XMLWriterUtil
                 }
             catch (XMLStreamException e)
                 {
-                logger.log(Level.WARNING, "XML error during prepare----------" + e.getMessage());
+                Log.e(e.getMessage(),"XMLe");
                 }
             }
         }
@@ -76,7 +75,7 @@ public class XMLWriterUtil
                 }
             catch (XMLStreamException e)
                 {
-                logger.log(Level.WARNING, "XML error during write--------" + e.getMessage());
+                Log.e(e.getMessage(),"XMLe");
                 }
             }
 
@@ -94,7 +93,7 @@ public class XMLWriterUtil
                 }
             catch (XMLStreamException e)
                 {
-                logger.log(Level.WARNING, "XML error during exit------------" + e.getMessage());
+                Log.e(e.getMessage(),"XMLe");
                 }
             }
 

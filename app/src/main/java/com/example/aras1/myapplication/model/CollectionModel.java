@@ -10,13 +10,23 @@ public class CollectionModel
     public CollectionModel(String name)
         {
         content = new LinkedHashMap<>(40);
-        this.name=name;
+        this.name = name;
         }
 
 
-    public void addContent(String front,String reverse)
+    public void addContent(String front, String reverse)
         {
-        content.put(front,reverse);
+        content.put(front, reverse);
+        }
+
+    public LinkedHashMap<String, String> getContent()
+        {
+        return content;
+        }
+
+    public Integer getSize()
+        {
+        return content.size();
         }
 
     @Override

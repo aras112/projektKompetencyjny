@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.widget.Button;
 
 import com.example.aras1.myapplication.AddActivity;
+import com.example.aras1.myapplication.BrowseActivity;
 import com.example.aras1.myapplication.ChooseAction;
 import com.example.aras1.myapplication.OpenActivity;
 import com.example.aras1.myapplication.R;
@@ -54,7 +55,7 @@ public class ChooseActionController {
                 (view) ->
                 {
 
-                    Intent newIntent = new Intent(action, StatisticsActivity.class);
+                    Intent newIntent = new Intent(action, BrowseActivity.class);
                     action.startActivity(newIntent);
 
                 }

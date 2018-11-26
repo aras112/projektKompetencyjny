@@ -1,12 +1,12 @@
 package com.example.aras1.myapplication.controller;
 
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.aras1.myapplication.FlashcardItem;
+import com.example.aras1.myapplication.BrowseActivity;
+import com.example.aras1.myapplication.model.FlashcardItem;
 import com.example.aras1.myapplication.FlashcardListAdapter;
 import com.example.aras1.myapplication.OpenActivity;
 import com.example.aras1.myapplication.R;
@@ -35,22 +35,28 @@ public class OpenActivityController
         chooseCollectionLabel = activity.findViewById(R.id.chooseCollectionLabel);
         collectionList = activity.findViewById(R.id.collectionList);
         Log.i("plik ", "path");
-        String path = Environment.getExternalStorageDirectory().getPath() + "/" + activity.getString(R.string.app_name);
+        String path = activity.getFilesDir() + "/" + activity.getString(R.string.app_name);
         flashcardList = new ArrayList<>();
 
         File myDir = new File(path);
 
         Log.i("plik ", myDir.getName());
 
-        for (File f : myDir.listFiles())
+        if (myDir.exists())
             {
-            Log.i("plik ", f.getName());
-            if (f.isFile())
+            for (File f : myDir.listFiles())
                 {
-                String name = f.getName();
-                Log.i("kolekcja: ", name);
-                flashcardList.add(new FlashcardItem(name, "01-01-1970"));
+                Log.i("plik ", f.getName());
+                if (f.isFile())
+                    {
+                    String name = f.getName();
+                    Log.i("kolekcja: ", name);
+                    flashcardList.add(new FlashcardItem(name, "01-01-1970",f));
+                    }
                 }
+            } else
+            {
+            return;
             }
 
 
@@ -62,10 +68,10 @@ public class OpenActivityController
 
         collectionList.setOnItemClickListener((parent, view, position, id) ->
         {
-//            Intent onTouchActivity = new Intent(MeetingsListActivity.this, CurrentMeetingActivity.class);
-//            onTouchActivity.putExtra("recorderName", recorderName);
-//            onTouchActivity.putExtra("Name", meetingItems.get(position).getName());
-//            startActivity(onTouchActivity);
+        Intent onTouchActivity = new Intent(activity, BrowseActivity.class);
+        onTouchActivity.putExtra("file",flashcardList.get(position).getFile().getPath());
+        Log.i(flashcardList.get(position).getFile().getPath(),"cfile");
+        activity.startActivity(onTouchActivity);
         });
 
 

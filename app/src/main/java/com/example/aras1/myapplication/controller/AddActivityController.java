@@ -15,7 +15,8 @@ import com.example.aras1.myapplication.xml.XMLWriterUtil;
 import java.io.File;
 import java.io.IOException;
 
-public class AddActivityController {
+public class AddActivityController
+    {
     AddActivity activity;
     TextView front;
     TextView reverse;
@@ -31,12 +32,14 @@ public class AddActivityController {
     ImageButton reverseImage;
 
 
-    public AddActivityController(AddActivity activity) {
+    public AddActivityController(AddActivity activity)
+        {
         this.activity = activity;
         init();
-    }
+        }
 
-    void init() {
+    void init()
+        {
         front = activity.findViewById(R.id.textFront);
         reverse = activity.findViewById(R.id.textReverse);
         addNewItem = activity.findViewById(R.id.addNew);
@@ -50,14 +53,14 @@ public class AddActivityController {
         addNewItem.setOnClickListener(
                 (view) ->
                 {
-                    addItem();
+                addItem();
                 }
         );
 
         saveCollection.setOnClickListener(
                 (view) ->
                 {
-                    finish();
+                finish();
                 }
         );
 
@@ -76,73 +79,95 @@ public class AddActivityController {
         );
 
 
-    }
+        }
 
-    void addItem() {
+    void addItem()
+        {
 
-        if (titleIsEmpty()) {
+        if (titleIsEmpty())
+            {
             showMessage();
-        } else {
+            } else
+            {
 
-            if (!isFileReady) {
+            if (!isFileReady)
+                {
                 prepareFile();
-            }
+                }
 
-            if (!fieldIsNull()) {
+            if (!fieldIsNull())
+                {
                 collectionWriter.writeItem(front.getText().toString(), reverse.getText().toString());
                 count++;
                 countView.setText(activity.getText(R.string.countAdded) + " " + count);
-            } else {
+                } else
+                {
                 showMessageForFileds();
+                }
+            }
+
+        }
+
+    boolean titleIsEmpty()
+        {
+
+        return collectionName.getText().toString().trim().equals("");
+
+        }
+
+    void prepareFile()
+        {
+        String path = activity.getFilesDir() + "/" + activity.getString(R.string.app_name);
+        File directory = new File(path);
+
+        if (!directory.exists())
+            {
+            directory.mkdirs();
+            }
+
+        collection = new File(path + "/" + collectionName.getText().toString().trim() + ".xml");
+
+        try
+            {
+            collectionWriter = new XMLWriterUtil(collection);
+            }
+        catch (IOException e)
+            {
+            Log.e(e.getMessage(), "XMLe");
+            }
+
+        collectionWriter.prepareToWrite();
+        isFileReady = true;
+        }
+
+    void showMessage()
+        {
+        Toast.makeText(activity, activity.getString(R.string.titleError), Toast.LENGTH_LONG).show();
+        }
+
+    void showMessageForFileds()
+        {
+        Toast.makeText(activity, activity.getString(R.string.fieldsError), Toast.LENGTH_LONG).show();
+        }
+
+    boolean fieldIsNull()
+        {
+        return (front.getText().toString().trim().equals("") || reverse.getText().toString().trim().equals(""));
+        }
+
+    void finish()
+        {
+        if (titleIsEmpty()&&count>0)
+            {
+            showMessage();
+            } else
+            {
+            collectionWriter.endWrite();
+            Toast.makeText(activity, activity.getString(R.string.messageAfterAdd), Toast.LENGTH_LONG).show();
             }
         }
 
     }
-
-    boolean titleIsEmpty() {
-
-        return collectionName.getText().toString().trim().equals("");
-
-    }
-
-    void prepareFile() {
-        String path = Environment.getExternalStorageDirectory().getPath() + "/" + activity.getString(R.string.app_name);
-        File directory = new File(path);
-
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-
-        collection = new File(path + "/" + collectionName.getText().toString().trim() + ".xml");
-
-        try {
-            collectionWriter = new XMLWriterUtil(collection);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        collectionWriter.prepareToWrite();
-        isFileReady = true;
-    }
-
-    void showMessage() {
-        Toast.makeText(activity, activity.getString(R.string.titleError), Toast.LENGTH_LONG).show();
-    }
-
-    void showMessageForFileds() {
-        Toast.makeText(activity, activity.getString(R.string.fieldsError), Toast.LENGTH_LONG).show();
-    }
-
-    boolean fieldIsNull() {
-        return (front.getText().toString().trim().equals("") || reverse.getText().toString().trim().equals(""));
-    }
-
-    void finish() {
-        collectionWriter.endWrite();
-        Toast.makeText(activity, activity.getString(R.string.messageAfterAdd), Toast.LENGTH_LONG).show();
-    }
-
-}
 
 
 

@@ -21,6 +21,7 @@
         <activity android:name=".AddActivity"></activity>
         <activity android:name=".OpenActivity"></activity>
         <activity android:name=".StatisticsActivity"></activity>
+        <activity android:name=".BrowseActivity"></activity>
     </application>
 
 </manifest>
