@@ -100,6 +100,9 @@ public class AddActivityController
                 collectionWriter.writeItem(front.getText().toString(), reverse.getText().toString());
                 count++;
                 countView.setText(activity.getText(R.string.countAdded) + " " + count);
+                front.setText("");
+                reverse.setText("");
+                    Toast.makeText(activity, "Dodano fiszkę", Toast.LENGTH_SHORT).show();
                 } else
                 {
                 showMessageForFileds();

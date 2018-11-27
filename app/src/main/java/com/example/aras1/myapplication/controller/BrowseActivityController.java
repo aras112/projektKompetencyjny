@@ -16,40 +16,44 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-public class BrowseActivityController
-    {
+public class BrowseActivityController {
 
     private BrowseActivity activity;
     private ProgressBar progressBar;
     private TextView card;
     private TextView point;
+    private TextView questionAnswerLabel;
     private ImageButton correctButton;
     private ImageButton wrongButton;
     private File file;
     private CollectionModel model;
     private Iterator<String> front;
-    private Boolean isFront = false;
+    private Iterator<String> reverse;
+    private Boolean isFront = true;
+    private Boolean isReversed = false;
     private String frontString;
+    private String reverseString;
     private Integer size;
     private Integer currentSize = 0;
     private Boolean isAnsweared = false;
     private Integer points = 0;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public BrowseActivityController(BrowseActivity activity)
-        {
-        this.activity = activity;
-        init();
-        }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    void init()
-        {
+    public BrowseActivityController(BrowseActivity activity) {
+        this.activity = activity;
+        init();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    void init() {
         openCollection();
 
         front = model.getContent().keySet().iterator();
+        reverse = model.getContent().values().iterator();
         card = activity.findViewById(R.id.card);
         point = activity.findViewById(R.id.points);
+        questionAnswerLabel = activity.findViewById(R.id.questionAnswerLabel);
         correctButton = activity.findViewById(R.id.correctButton);
         wrongButton = activity.findViewById(R.id.wrongButton);
         size = model.getSize();
@@ -59,16 +63,17 @@ public class BrowseActivityController
         progressBar = activity.findViewById(R.id.progressBar);
         progressBar.setMax(size);
 
-        point.setText(activity.getString(R.string.points)+" "+points+"/"+size);
+        point.setText(activity.getString(R.string.points) + " " + points + "/" + size);
+        questionAnswerLabel.setText("Pytanie");
 
         correctButton.setOnClickListener(
                 (view) ->
                 {
-                if (isFront&&!isAnsweared)
-                    {
-                    isAnsweared=true;
-                    points++;
-                    point.setText(activity.getString(R.string.points)+" "+points+"/"+size);
+                    if (!isAnsweared) {
+                        isAnsweared = true;
+                        points++;
+                        point.setText(activity.getString(R.string.points) + " " + points + "/" + size);
+                        loadNextFlashcard();
                     }
                 }
         );
@@ -76,46 +81,52 @@ public class BrowseActivityController
         wrongButton.setOnClickListener(
                 (view) ->
                 {
-                if (isFront&&!isAnsweared)
-                    {
-                    isAnsweared=true;
-                    point.setText(activity.getString(R.string.points)+" "+points+"/"+size);
+                    if (!isAnsweared) {
+                        isAnsweared = true;
+                        point.setText(activity.getString(R.string.points) + " " + points + "/" + size);
+                        loadNextFlashcard();
                     }
                 }
         );
 
         card.setOnClickListener((view) ->
                 {
-                if (isFront&&isAnsweared)
-                    {
-                    if (front.hasNext())
-                        {
-                        isAnsweared=false;
-                        frontString = front.next();
-                        card.setText(frontString);
+
+                    if (isFront) {
                         isFront = false;
-                        progressBar.setProgress(++currentSize, true);
-                        } else
-                        {
-                        card.setText(activity.getString(R.string.collectionEnd));
-                        progressBar.setProgress(size, true);
-                        }
-                    } else if (!isFront)
-                    {
-                    isFront = true;
-                    card.setText(model.getContent().get(frontString));
+                        isReversed = true;
+                        card.setText(model.getContent().get(frontString));
+                        questionAnswerLabel.setText("Odpowiedź");
+                    } else if (isReversed) {
+                        isReversed = false;
+                        isFront = true;
+                        card.setText(frontString);
+                        questionAnswerLabel.setText("Pytanie");
                     }
                 }
 
         );
 
 
-        }
+    }
 
-    private void openCollection()
-        {
+    private void loadNextFlashcard() {
+        if (front.hasNext()) {
+            isAnsweared = false;
+            frontString = front.next();
+            card.setText(frontString);
+            isFront = true;
+            questionAnswerLabel.setText("Pytanie");
+            progressBar.setProgress(++currentSize, true);
+        } else {
+            card.setText(activity.getString(R.string.collectionEnd));
+            progressBar.setProgress(size, true);
+        }
+    }
+
+    private void openCollection() {
         file = new File(activity.getIntent().getStringExtra("file"));
         model = new XMLReaderUtil(file).getCollectionModel();
-        }
-
     }
+
+}

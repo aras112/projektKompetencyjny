@@ -6,13 +6,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.aras1.myapplication.BrowseActivity;
-import com.example.aras1.myapplication.model.FlashcardItem;
 import com.example.aras1.myapplication.FlashcardListAdapter;
 import com.example.aras1.myapplication.OpenActivity;
 import com.example.aras1.myapplication.R;
+import com.example.aras1.myapplication.model.FlashcardItem;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class OpenActivityController
@@ -34,8 +35,8 @@ public class OpenActivityController
         {
         chooseCollectionLabel = activity.findViewById(R.id.chooseCollectionLabel);
         collectionList = activity.findViewById(R.id.collectionList);
-        Log.i("plik ", "path");
         String path = activity.getFilesDir() + "/" + activity.getString(R.string.app_name);
+            Log.i("plik ",path );
         flashcardList = new ArrayList<>();
 
         File myDir = new File(path);
@@ -51,7 +52,8 @@ public class OpenActivityController
                     {
                     String name = f.getName();
                     Log.i("kolekcja: ", name);
-                    flashcardList.add(new FlashcardItem(name, "01-01-1970",f));
+                    Date date = new Date(f.lastModified());
+                    flashcardList.add(new FlashcardItem(name,date.toString() ,f));
                     }
                 }
             } else
