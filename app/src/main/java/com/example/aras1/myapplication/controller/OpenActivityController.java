@@ -72,6 +72,7 @@ public class OpenActivityController
         {
         Intent onTouchActivity = new Intent(activity, BrowseActivity.class);
         onTouchActivity.putExtra("file",flashcardList.get(position).getFile().getPath());
+        //onTouchActivity.putExtra("collectionName",flashcardList.get(position).getFile().getPath());
         Log.i(flashcardList.get(position).getFile().getPath(),"cfile");
         activity.startActivity(onTouchActivity);
         });

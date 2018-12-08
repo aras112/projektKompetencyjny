@@ -51,8 +51,17 @@ public class StatisticalDatabase extends SQLiteOpenHelper
 
         while (cursor.moveToNext())
             {
-            Log.i("database", cursor.getInt(0) + " " + cursor.getString(1));
+            Log.i("database","ID: "+ cursor.getInt(0) + " NAME: " + cursor.getString(1));
+            }
+
+        cursor = db.query("POINTS", new String[]{"*"}, null, null, null, null, null);
+
+        while (cursor.moveToNext())
+            {
+            Log.i("database", "COLLECTION_ID: "+cursor.getInt(1) + " POINTS: " + cursor.getInt(2));
             }
         }
+
+
 
     }

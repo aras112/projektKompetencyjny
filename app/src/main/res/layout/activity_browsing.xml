@@ -42,6 +42,7 @@
             android:id="@+id/questionAnswerLabel"
             android:layout_width="99dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="TextView"
             android:textSize="18sp" />
 
