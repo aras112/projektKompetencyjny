@@ -110,6 +110,7 @@ public class BrowseActivityController {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void loadNextFlashcard() {
         if (front.hasNext()) {
             isAnsweared = false;

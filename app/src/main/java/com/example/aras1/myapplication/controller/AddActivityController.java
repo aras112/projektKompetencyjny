@@ -1,5 +1,7 @@
 package com.example.aras1.myapplication.controller;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Button;
@@ -9,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.aras1.myapplication.AddActivity;
 import com.example.aras1.myapplication.R;
+import com.example.aras1.myapplication.database.StatisticalDatabase;
 import com.example.aras1.myapplication.xml.XMLReaderUtil;
 import com.example.aras1.myapplication.xml.XMLWriterUtil;
 
@@ -30,16 +33,20 @@ public class AddActivityController
     File collection;
     ImageButton frontImage;
     ImageButton reverseImage;
+    StatisticalDatabase statisticalDatabase;
+    SQLiteDatabase db;
 
 
     public AddActivityController(AddActivity activity)
         {
         this.activity = activity;
+        statisticalDatabase = new StatisticalDatabase(activity);
         init();
         }
 
     void init()
         {
+        db = statisticalDatabase.getWritableDatabase();
         front = activity.findViewById(R.id.textFront);
         reverse = activity.findViewById(R.id.textReverse);
         addNewItem = activity.findViewById(R.id.addNew);
@@ -102,7 +109,7 @@ public class AddActivityController
                 countView.setText(activity.getText(R.string.countAdded) + " " + count);
                 front.setText("");
                 reverse.setText("");
-                    Toast.makeText(activity, "Dodano fiszkę", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Dodano fiszkę", Toast.LENGTH_SHORT).show();
                 } else
                 {
                 showMessageForFileds();
@@ -113,9 +120,7 @@ public class AddActivityController
 
     boolean titleIsEmpty()
         {
-
         return collectionName.getText().toString().trim().equals("");
-
         }
 
     void prepareFile()
@@ -129,6 +134,7 @@ public class AddActivityController
             }
 
         collection = new File(path + "/" + collectionName.getText().toString().trim() + ".xml");
+        addToDatabase(collectionName.getText().toString().trim());
 
         try
             {
@@ -160,7 +166,7 @@ public class AddActivityController
 
     void finish()
         {
-        if (titleIsEmpty()&&count>0)
+        if (titleIsEmpty() && count > 0)
             {
             showMessage();
             } else
@@ -168,6 +174,14 @@ public class AddActivityController
             collectionWriter.endWrite();
             Toast.makeText(activity, activity.getString(R.string.messageAfterAdd), Toast.LENGTH_LONG).show();
             }
+        }
+
+    private void addToDatabase(String collectionName)
+        {
+        ContentValues collection = new ContentValues();
+        collection.put("NAME",collectionName);
+        db.insert("COLLECTIONS",null,collection);
+        Log.i("database",collectionName);
         }
 
     }
