@@ -21,7 +21,7 @@
     <string name="progress">Postępy w nauce</string>
     <string name="rewards">Odznaczenia</string>
     <string name="tips">Porady</string>
-    <string name="tapLabel">Dotnik na fiszkę po odpowiedź</string>
+    <string name="tapLabel">Dotknij na fiszkę po odpowiedź</string>
     <string name="collectionEnd">Koniec kolekcji</string>
     <string name="points">Liczba punktów: </string>
     <string name="beforeStart">Liczba punktów: 0 </string>

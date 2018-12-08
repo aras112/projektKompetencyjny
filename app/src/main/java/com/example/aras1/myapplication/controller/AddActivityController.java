@@ -181,7 +181,7 @@ public class AddActivityController
         ContentValues collection = new ContentValues();
         collection.put("NAME",collectionName);
         db.insert("COLLECTIONS",null,collection);
-        Log.i("database",collectionName);
+        statisticalDatabase.logAllRecor(db);
         }
 
     }
