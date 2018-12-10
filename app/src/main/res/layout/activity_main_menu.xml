@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?attr/colorAccent"
         android:gravity="center"
         android:orientation="vertical"
         tools:layout_editor_absoluteY="37dp">
@@ -17,7 +18,7 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="271dp"
-            app:srcCompat="@mipmap/logo" />
+            app:srcCompat="@drawable/logo" />
 
         <Button
             android:id="@+id/addCollection"
