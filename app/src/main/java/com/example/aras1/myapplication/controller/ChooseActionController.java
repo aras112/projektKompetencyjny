@@ -10,19 +10,22 @@ import com.example.aras1.myapplication.OpenActivity;
 import com.example.aras1.myapplication.R;
 import com.example.aras1.myapplication.StatisticsActivity;
 
-public class ChooseActionController {
+public class ChooseActionController
+    {
 
     ChooseAction action;
     Button addCollection;
     Button openCollection;
     Button statistics;
 
-    public ChooseActionController(ChooseAction action) {
+    public ChooseActionController(ChooseAction action)
+        {
         this.action = action;
         init();
-    }
+        }
 
-    void init() {
+    void init()
+        {
 
         addCollection = action.findViewById(R.id.addCollection);
         openCollection = action.findViewById(R.id.openCollection);
@@ -31,10 +34,8 @@ public class ChooseActionController {
         addCollection.setOnClickListener(
                 (view) ->
                 {
-
-                    Intent newIntent = new Intent(action, AddActivity.class);
-                    action.startActivity(newIntent);
-
+                Intent newIntent = new Intent(action, AddActivity.class);
+                action.startActivity(newIntent);
                 }
 
         );
@@ -43,10 +44,8 @@ public class ChooseActionController {
         openCollection.setOnClickListener(
                 (view) ->
                 {
-
-                    Intent newIntent = new Intent(action, OpenActivity.class);
-                    action.startActivity(newIntent);
-
+                Intent newIntent = new Intent(action, OpenActivity.class);
+                action.startActivity(newIntent);
                 }
 
         );
@@ -54,13 +53,11 @@ public class ChooseActionController {
         statistics.setOnClickListener(
                 (view) ->
                 {
-
-                    Intent newIntent = new Intent(action, BrowseActivity.class);
-                    action.startActivity(newIntent);
-
+                Intent newIntent = new Intent(action, StatisticsActivity.class);
+                action.startActivity(newIntent);
                 }
 
         );
 
+        }
     }
-}

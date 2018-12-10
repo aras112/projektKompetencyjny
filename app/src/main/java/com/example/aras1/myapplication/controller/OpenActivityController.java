@@ -36,7 +36,7 @@ public class OpenActivityController
         chooseCollectionLabel = activity.findViewById(R.id.chooseCollectionLabel);
         collectionList = activity.findViewById(R.id.collectionList);
         String path = activity.getFilesDir() + "/" + activity.getString(R.string.app_name);
-            Log.i("plik ",path );
+        Log.i("plik ", path);
         flashcardList = new ArrayList<>();
 
         File myDir = new File(path);
@@ -53,7 +53,7 @@ public class OpenActivityController
                     String name = f.getName();
                     Log.i("kolekcja: ", name);
                     Date date = new Date(f.lastModified());
-                    flashcardList.add(new FlashcardItem(name,date.toString() ,f));
+                    flashcardList.add(new FlashcardItem(name, date.toString(), f));
                     }
                 }
             } else
@@ -71,9 +71,9 @@ public class OpenActivityController
         collectionList.setOnItemClickListener((parent, view, position, id) ->
         {
         Intent onTouchActivity = new Intent(activity, BrowseActivity.class);
-        onTouchActivity.putExtra("file",flashcardList.get(position).getFile().getPath());
+        onTouchActivity.putExtra("file", flashcardList.get(position).getFile().getPath());
         //onTouchActivity.putExtra("collectionName",flashcardList.get(position).getFile().getPath());
-        Log.i(flashcardList.get(position).getFile().getPath(),"cfile");
+        Log.i(flashcardList.get(position).getFile().getPath(), "cfile");
         activity.startActivity(onTouchActivity);
         });
 

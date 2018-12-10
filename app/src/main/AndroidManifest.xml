@@ -18,10 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddActivity"></activity>
-        <activity android:name=".OpenActivity"></activity>
-        <activity android:name=".StatisticsActivity"></activity>
-        <activity android:name=".BrowseActivity"></activity>
+        <activity android:name=".AddActivity" />
+        <activity android:name=".OpenActivity" />
+        <activity android:name=".StatisticsActivity" />
+        <activity android:name=".BrowseActivity" />
+        <activity android:name=".PointsAvgActivity"></activity>
     </application>
 
 </manifest>

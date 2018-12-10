@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Flash game</string>
+    <string name="app_name">FlashGame</string>
     <string name="ok">Zapisz kolekcje</string>
     <string name="name">Nazwa kolekcji</string>
     <string name="tape">Podaj nazwę fiszki</string>
@@ -25,5 +25,10 @@
     <string name="collectionEnd">Koniec kolekcji</string>
     <string name="points">Liczba punktów: </string>
     <string name="beforeStart">Liczba punktów: 0 </string>
+
+    <string-array name="list">
+        <item>jeden</item>
+        <item>dwa</item>
+    </string-array>
 
 </resources>

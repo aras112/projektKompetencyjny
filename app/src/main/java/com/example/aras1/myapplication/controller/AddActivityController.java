@@ -182,6 +182,7 @@ public class AddActivityController
         collection.put("NAME",collectionName);
         db.insert("COLLECTIONS",null,collection);
         statisticalDatabase.logAllRecor(db);
+        db.close();
         }
 
     }
