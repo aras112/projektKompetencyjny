@@ -24,12 +24,15 @@
             android:id="@+id/collectionName"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="TextView" />
+            android:gravity="center"
+            android:text="TextView"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/creationDate"
             android:layout_width="match_parent"
             android:layout_height="20dp"
+            android:gravity="center"
             android:text="TextView" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

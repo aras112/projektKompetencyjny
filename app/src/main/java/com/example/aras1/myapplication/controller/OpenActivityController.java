@@ -24,6 +24,7 @@ import com.example.aras1.myapplication.R;
 import com.example.aras1.myapplication.model.FlashcardItem;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,8 +67,11 @@ public class OpenActivityController extends AppCompatActivity implements Collect
                     {
                     String name = f.getName();
                     Log.i("kolekcja: ", name);
+                    String nameFormatted = name.substring(0, name.length()-4);
                     Date date = new Date(f.lastModified());
-                    flashcardList.add(new FlashcardItem(name, date.toString(), f));
+                    android.text.format.DateFormat df = new android.text.format.DateFormat();
+                    String formattedDate = df.format("yyyy-MM-dd hh:mm:ss a", date).toString();
+                    flashcardList.add(new FlashcardItem(nameFormatted, formattedDate, f));
                     }
                 }
             } else
@@ -86,7 +90,7 @@ public class OpenActivityController extends AppCompatActivity implements Collect
         {
         Intent onTouchActivity = new Intent(activity, BrowseActivity.class);
         onTouchActivity.putExtra("file", flashcardList.get(position).getFile().getPath());
-        //onTouchActivity.putExtra("collectionName",flashcardList.get(position).getFile().getPath());
+        onTouchActivity.putExtra("collectionName",flashcardList.get(position).getFile().getName());
         Log.i(flashcardList.get(position).getFile().getPath(), "cfile");
         activity.startActivity(onTouchActivity);
         });

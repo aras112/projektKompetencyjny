@@ -1,16 +1,21 @@
 package com.example.aras1.myapplication.controller;
 
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.aras1.myapplication.BrowseActivity;
+import com.example.aras1.myapplication.FTP;
 import com.example.aras1.myapplication.R;
 import com.example.aras1.myapplication.database.StatisticalDatabase;
 import com.example.aras1.myapplication.model.CollectionModel;
@@ -20,8 +25,9 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
+import android.content.SharedPreferences;
 
-public class BrowseActivityController
+public class BrowseActivityController extends AppCompatActivity
     {
 
     private BrowseActivity activity;
@@ -46,7 +52,8 @@ public class BrowseActivityController
     private StatisticalDatabase statisticalDatabase;
     private SQLiteDatabase db;
     private Integer indexInDatabase;
-
+    private Button shareButton;
+    private String path;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public BrowseActivityController(BrowseActivity activity)
@@ -59,6 +66,7 @@ public class BrowseActivityController
     @RequiresApi(api = Build.VERSION_CODES.N)
     void init()
         {
+            path = activity.getFilesDir() + "/" + activity.getString(R.string.app_name);
         openCollection();
         db = statisticalDatabase.getWritableDatabase();
         indexInDatabase = getIndexInDB();
@@ -69,6 +77,7 @@ public class BrowseActivityController
         questionAnswerLabel = activity.findViewById(R.id.questionAnswerLabel);
         correctButton = activity.findViewById(R.id.correctButton);
         wrongButton = activity.findViewById(R.id.wrongButton);
+        shareButton = activity.findViewById(R.id.shareButton);
         size = model.getSize();
         frontString = front.next();
         card.setText(frontString);
@@ -124,10 +133,26 @@ public class BrowseActivityController
 
         );
 
+        shareButton.setOnClickListener( (view) -> {
+            sendCollectionFTP();
+        });
+
 
         }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+        private void sendCollectionFTP() {
+            SharedPreferences sharedPref = this.getSharedPreferences("defaultFTP.xml", 0);
+            FTP ftp = new FTP(sharedPref.getString("Custom_hostname", getString(R.string.default_hostname)),
+                    sharedPref.getString("Custom_login", getString(R.string.default_login)),
+                    sharedPref.getString("Custom_password", getString(R.string.default_password)),
+                    sharedPref.getString("Custom_directory", getString(R.string.default_directory)),
+                    path,
+                    activity.getIntent().getStringExtra("collectionName"));
+            ftp.execute();
+            Toast.makeText(this, "Wysłano na serwer FTP.", Toast.LENGTH_SHORT).show();
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.N)
     private void loadNextFlashcard()
         {
         if (front.hasNext())
