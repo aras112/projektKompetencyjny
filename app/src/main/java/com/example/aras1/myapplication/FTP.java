@@ -3,6 +3,7 @@ package com.example.aras1.myapplication;
 
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.util.Log;
 
 import org.apache.commons.net.ftp.FTPClient;
 

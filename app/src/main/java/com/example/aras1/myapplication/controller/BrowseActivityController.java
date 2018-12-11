@@ -27,7 +27,7 @@ import java.util.Iterator;
 import java.util.Set;
 import android.content.SharedPreferences;
 
-public class BrowseActivityController extends AppCompatActivity
+public class BrowseActivityController
     {
 
     private BrowseActivity activity;
@@ -141,15 +141,15 @@ public class BrowseActivityController extends AppCompatActivity
         }
 
         private void sendCollectionFTP() {
-            SharedPreferences sharedPref = this.getSharedPreferences("defaultFTP.xml", 0);
-            FTP ftp = new FTP(sharedPref.getString("Custom_hostname", getString(R.string.default_hostname)),
-                    sharedPref.getString("Custom_login", getString(R.string.default_login)),
-                    sharedPref.getString("Custom_password", getString(R.string.default_password)),
-                    sharedPref.getString("Custom_directory", getString(R.string.default_directory)),
+            SharedPreferences sharedPref = activity.getSharedPreferences("defaultFTP.xml", 0);
+            FTP ftp = new FTP(sharedPref.getString("Custom_hostname", activity.getString(R.string.default_hostname)),
+                    sharedPref.getString("Custom_login", activity.getString(R.string.default_login)),
+                    sharedPref.getString("Custom_password", activity.getString(R.string.default_password)),
+                    sharedPref.getString("Custom_directory", activity.getString(R.string.default_directory)),
                     path,
                     activity.getIntent().getStringExtra("collectionName"));
             ftp.execute();
-            Toast.makeText(this, "Wysłano na serwer FTP.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "Wysłano na serwer FTP.", Toast.LENGTH_SHORT).show();
         }
 
         @RequiresApi(api = Build.VERSION_CODES.N)
