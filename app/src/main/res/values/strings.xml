@@ -25,6 +25,8 @@
     <string name="collectionEnd">Koniec kolekcji</string>
     <string name="points">Liczba punktów: </string>
     <string name="beforeStart">Liczba punktów: 0 </string>
+    <string name="share">Udostępnij</string>
+    <string name="getCollection">Pobierz kolekcję</string>
 
     <string-array name="list">
         <item>jeden</item>

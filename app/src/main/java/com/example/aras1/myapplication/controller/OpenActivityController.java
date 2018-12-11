@@ -1,11 +1,18 @@
 package com.example.aras1.myapplication.controller;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.aras1.myapplication.BrowseActivity;
+import com.example.aras1.myapplication.CollectionDialog;
 import com.example.aras1.myapplication.FlashcardListAdapter;
 import com.example.aras1.myapplication.OpenActivity;
 import com.example.aras1.myapplication.R;
@@ -16,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class OpenActivityController
+public class OpenActivityController extends AppCompatActivity
     {
 
     private OpenActivity activity;
@@ -24,6 +31,7 @@ public class OpenActivityController
     private ListView collectionList;
     private FlashcardListAdapter adapter;
     private List<FlashcardItem> flashcardList;
+    private Button getCollectionButton;
 
     public OpenActivityController(OpenActivity activity)
         {
@@ -34,6 +42,7 @@ public class OpenActivityController
     protected void init()
         {
         chooseCollectionLabel = activity.findViewById(R.id.chooseCollectionLabel);
+        getCollectionButton = activity.findViewById(R.id.getCollectionButton);
         collectionList = activity.findViewById(R.id.collectionList);
         String path = activity.getFilesDir() + "/" + activity.getString(R.string.app_name);
         Log.i("plik ", path);
@@ -78,6 +87,24 @@ public class OpenActivityController
         });
 
 
+        getCollectionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
+
+
+        }
+
+        public void openDialog() {
+            CollectionDialog collectionDialog = new CollectionDialog();
+            try {
+                collectionDialog.show(activity.getSupportFragmentManager(), "collection dialog");
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
         }
 
     }
