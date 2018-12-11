@@ -1,5 +1,6 @@
 package com.example.aras1.myapplication.controller;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ListView;
 
 import com.example.aras1.myapplication.PointsAvgActivity;
 import com.example.aras1.myapplication.R;
+import com.example.aras1.myapplication.StatisiticForCollection;
 import com.example.aras1.myapplication.database.StatisticalDatabase;
 
 import java.util.ArrayList;
@@ -42,14 +44,9 @@ public class PointsAvgController
         Integer idInDB = statisticalDatabase.getCollectionsName(db).get(collestionList.get(position));
         Log.i("database","collection with id: "+ idInDB);
 
-        for(String point:statisticalDatabase.getCollectionPoints(db,idInDB))
-            {
-
-            Log.i("database","point result for current database : " + point);
-
-            }
-
-
+        Intent newIntent = new Intent(activity, StatisiticForCollection.class);
+        newIntent.putExtra("collectionID",idInDB);
+        activity.startActivity(newIntent);
         });
 
 
