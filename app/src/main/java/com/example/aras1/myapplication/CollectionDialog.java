@@ -34,8 +34,6 @@ public class CollectionDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.popup_get_collection, null);
         remoteCollectionName = view.findViewById(R.id.remoteCollectionName);
-        Toast.makeText(getActivity(), "Pobrano kolekcję" + remoteCollectionName, Toast.LENGTH_SHORT).show();
-
         builder.setView(view)
                 .setTitle("Pobierz koleckcję")
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {

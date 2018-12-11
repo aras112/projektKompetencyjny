@@ -111,7 +111,6 @@ public class OpenActivityController extends AppCompatActivity implements Collect
             }
         }
 
-
         @Override
         public void applyText(String remoteCollectionName) {
         //tutaj zrobić pobieranie kolekcji z serwera po FTP
