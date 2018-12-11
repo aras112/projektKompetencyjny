@@ -1,15 +1,20 @@
 package com.example.aras1.myapplication.controller;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.aras1.myapplication.BrowseActivity;
 import com.example.aras1.myapplication.CollectionDialog;
@@ -23,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class OpenActivityController extends AppCompatActivity
+public class OpenActivityController extends AppCompatActivity implements CollectionDialog.CollectionDialogListener
     {
 
     private OpenActivity activity;
@@ -87,24 +92,30 @@ public class OpenActivityController extends AppCompatActivity
         });
 
 
-        getCollectionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDialog();
-            }
+        getCollectionButton.setOnClickListener(v ->
+        {
+            openDialog();
         });
+
 
 
         }
 
         public void openDialog() {
-            CollectionDialog collectionDialog = new CollectionDialog();
+            CollectionDialog collectionDialog = new CollectionDialog(this);
             try {
                 collectionDialog.show(activity.getSupportFragmentManager(), "collection dialog");
             }
             catch(Exception e){
                 e.printStackTrace();
             }
+        }
+
+
+        @Override
+        public void applyText(String remoteCollectionName) {
+        //tutaj zrobić pobieranie kolekcji z serwera po FTP
+            Toast.makeText(activity, "Pobrano kolekcję: " + remoteCollectionName, Toast.LENGTH_SHORT).show();
         }
 
     }
