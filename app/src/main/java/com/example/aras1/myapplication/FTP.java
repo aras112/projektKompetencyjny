@@ -11,7 +11,8 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 
-public class FTP extends AsyncTask<Void, Void, Void> {
+public class FTP extends AsyncTask<Void, Void, Void>
+    {
 
     private Exception exception;
     private String hostname;
@@ -23,7 +24,8 @@ public class FTP extends AsyncTask<Void, Void, Void> {
     private String collectionName;
 
 
-    public FTP(String hostname, String login, String password, String directory, String pathToCollection, String collectionName) {
+    public FTP(String hostname, String login, String password, String directory, String pathToCollection, String collectionName)
+        {
         super();
         this.hostname = hostname;
         this.login = login;
@@ -32,16 +34,18 @@ public class FTP extends AsyncTask<Void, Void, Void> {
         this.pathToCollection = pathToCollection;
         this.collectionName = collectionName;
 
-    }
+        }
 
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected Void doInBackground(Void... voids)
+        {
         FTPClient client = new FTPClient();
         File file = new File(pathToCollection + "/" + collectionName);
 
 
-        try {
+        try
+            {
             client.connect(hostname);
             client.login(login, password);
             client.setFileType(FTPClient.BINARY_FILE_TYPE);
@@ -53,12 +57,14 @@ public class FTP extends AsyncTask<Void, Void, Void> {
             client.storeFile(file.getName(), buffIn);
 
 
-        } catch (Exception e) {
+            }
+        catch (Exception e)
+            {
             System.out.println(e.getMessage());
-        }
+            }
 
         return null;
+        }
+
+
     }
-
-
-}
