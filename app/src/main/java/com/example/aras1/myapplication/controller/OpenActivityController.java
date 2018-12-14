@@ -1,10 +1,12 @@
 package com.example.aras1.myapplication.controller;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
@@ -13,6 +15,7 @@ import android.support.v7.app.AppCompatDialogFragment;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -24,6 +27,7 @@ import com.example.aras1.myapplication.CollectionDialog;
 import com.example.aras1.myapplication.FTP;
 import com.example.aras1.myapplication.FTPGet;
 import com.example.aras1.myapplication.FlashcardListAdapter;
+import com.example.aras1.myapplication.OnSwipeTouchListener;
 import com.example.aras1.myapplication.OpenActivity;
 import com.example.aras1.myapplication.R;
 import com.example.aras1.myapplication.model.FlashcardItem;
@@ -35,6 +39,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static java.lang.Thread.sleep;
+
 public class OpenActivityController extends AppCompatActivity implements CollectionDialog.CollectionDialogListener
     {
 
@@ -45,6 +51,7 @@ public class OpenActivityController extends AppCompatActivity implements Collect
     private List<FlashcardItem> flashcardList;
     private Button getCollectionButton;
     private String path;
+    private  CollectionDialog collectionDialog;
 
     public OpenActivityController(OpenActivity activity)
         {
@@ -70,13 +77,34 @@ public class OpenActivityController extends AppCompatActivity implements Collect
 
         collectionList.setTextFilterEnabled(true);
 
-        collectionList.setOnItemClickListener((parent, view, position, id) ->
-        {
-        Intent onTouchActivity = new Intent(activity, BrowseActivity.class);
-        onTouchActivity.putExtra("file", flashcardList.get(position).getFile().getPath());
-        onTouchActivity.putExtra("collectionName",flashcardList.get(position).getFile().getName());
-        Log.i(flashcardList.get(position).getFile().getPath(), "cfile");
-        activity.startActivity(onTouchActivity);
+//        collectionList.setOnItemClickListener((parent, view, position, id) ->
+//        {
+//        Intent onTouchActivity = new Intent(activity, BrowseActivity.class);
+//        onTouchActivity.putExtra("file", flashcardList.get(position).getFile().getPath());
+//        onTouchActivity.putExtra("collectionName",flashcardList.get(position).getFile().getName());
+//        Log.i(flashcardList.get(position).getFile().getPath(), "cfile");
+//        activity.startActivity(onTouchActivity);
+//        });
+
+        collectionList.setOnTouchListener(new OnSwipeTouchListener(activity, collectionList) {
+            public void onSwipeLeft() {
+                int position = getPosition();
+                File fileToDelete = new File(path + "/"+ flashcardList.get(position).getName() + ".xml");
+                Log.i("todelete", fileToDelete.toString());
+                fileToDelete.delete();
+                adapter.remove(flashcardList.get(position));
+                adapter.notifyDataSetChanged();
+
+                Toast.makeText(activity, "Usunięto", Toast.LENGTH_SHORT).show();
+            }
+
+            public void onClick() {
+                Intent onTouchActivity = new Intent(activity, BrowseActivity.class);
+                onTouchActivity.putExtra("file", flashcardList.get(getPosition()).getFile().getPath());
+                onTouchActivity.putExtra("collectionName", flashcardList.get(getPosition()).getFile().getName());
+                Log.i(flashcardList.get(getPosition()).getFile().getPath(), "cfile");
+                activity.startActivity(onTouchActivity);
+            }
         });
 
 
@@ -125,7 +153,7 @@ public class OpenActivityController extends AppCompatActivity implements Collect
         }
 
         public void openDialog() {
-            CollectionDialog collectionDialog = new CollectionDialog(this);
+        collectionDialog = new CollectionDialog(this);
             try {
                 collectionDialog.show(activity.getSupportFragmentManager(), "collection dialog");
             }
@@ -135,8 +163,7 @@ public class OpenActivityController extends AppCompatActivity implements Collect
         }
 
         @Override
-        public void applyText(String remoteCollectionName) {
-        //tutaj zrobić pobieranie kolekcji z serwera po FTP
+        public void addRemoteColelction(String remoteCollectionName) {
 
             String path = activity.getFilesDir() + "/" + activity.getString(R.string.app_name);
             SharedPreferences sharedPref = activity.getSharedPreferences("defaultFTP.xml", 0);
@@ -146,10 +173,21 @@ public class OpenActivityController extends AppCompatActivity implements Collect
                     sharedPref.getString("Custom_directory", activity.getString(R.string.default_directory)),
                     path,
                     remoteCollectionName);
-            ftp.execute();
+            AsyncTask status = ftp.execute();
+
+            collectionDialog.dismiss();
+            //temp solution, should be checked by AsycnTaks status
+            try {
+                sleep(1200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
 
             File file = new File(path + "/" + remoteCollectionName+ ".xml");
-            if(file.length() != 0) {
+            Log.i("retrivedFile:", "" +file);
+            Log.i("retrivedFile Size:",  "" + file.length());
+            if(file.length() > 0) {
                 Date date = new Date();
                 String formattedName = getFormattedDate(date.getTime());
                 adapter.add(new FlashcardItem(remoteCollectionName, formattedName, file));
@@ -162,5 +200,6 @@ public class OpenActivityController extends AppCompatActivity implements Collect
                 Toast.makeText(activity, "Nie ma takiej kolekcji", Toast.LENGTH_SHORT).show();
             }
         }
+
 
     }

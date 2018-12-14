@@ -3,7 +3,6 @@ package com.example.aras1.myapplication;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.apache.commons.net.ftp.FTPClient;
 
@@ -21,6 +20,7 @@ public class FTPGet extends AsyncTask<Void, Void, Void>
     private String pathToCollection;
     private BufferedOutputStream buffOut = null;
     private String collectionName;
+    private boolean status = false;
 
 
     public FTPGet(String hostname, String login, String password, String directory, String pathToCollection, String collectionName)
@@ -36,7 +36,8 @@ public class FTPGet extends AsyncTask<Void, Void, Void>
     }
 
 
-    @Override
+
+    //@Override
     protected Void doInBackground(Void... voids)
     {
         FTPClient client = new FTPClient();
@@ -53,9 +54,11 @@ public class FTPGet extends AsyncTask<Void, Void, Void>
 
 
             client.enterLocalPassiveMode();
-            boolean result = client.retrieveFile(collectionName+ ".xml", buffOut);
+            boolean status = client.retrieveFile(collectionName+ ".xml", buffOut);
 
-            if(!result) {
+            Log.i("ftpm2:", "" + status);
+
+            if(!status) {
                 retrivedFile.delete();
             }
 
@@ -69,6 +72,8 @@ public class FTPGet extends AsyncTask<Void, Void, Void>
 
         return null;
     }
+
+
 
 
 }

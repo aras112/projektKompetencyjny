@@ -53,7 +53,7 @@ public class CollectionDialog extends AppCompatDialogFragment
                     public void onClick(DialogInterface dialog, int which)
                         {
                         String collectionName = remoteCollectionName.getText().toString();
-                        listener.applyText(collectionName);
+                        listener.addRemoteColelction(collectionName);
                         }
                     });
 
@@ -70,6 +70,6 @@ public class CollectionDialog extends AppCompatDialogFragment
 
     public interface CollectionDialogListener
         {
-        void applyText(String remoteCollectionName);
+        void addRemoteColelction(String remoteCollectionName);
         }
     }
