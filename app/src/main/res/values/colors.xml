@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#a0ef4f05</color>
     <color name="background">#00000000</color>
+    
+    <color name="adobeColor1">#82aad0</color>
+    <color name="adobeColor2">#7b0ce8</color>
+    <color name="adobeColor3">#FF0000</color>
+    <color name="adobeColor4">#e8860c</color>
+    <color name="adobeColor5">#bdbb90</color>
 </resources>

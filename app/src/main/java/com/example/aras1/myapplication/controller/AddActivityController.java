@@ -54,8 +54,6 @@ public class AddActivityController
         saveCollection = activity.findViewById(R.id.addNewCollection);
         countView = activity.findViewById(R.id.count);
         countView.setText(activity.getText(R.string.countAdded) + " " + count);
-        frontImage = activity.findViewById(R.id.frontImage);
-        reverseImage = activity.findViewById(R.id.reverseImage);
 
         addNewItem.setOnClickListener(
                 (view) ->
@@ -67,21 +65,10 @@ public class AddActivityController
         saveCollection.setOnClickListener(
                 (view) ->
                 {
-                finish();
-                }
-        );
-
-        frontImage.setOnClickListener(
-                (view) ->
-                {
-
-                }
-        );
-
-        reverseImage.setOnClickListener(
-                (view) ->
-                {
-
+                if(count>0)
+                    {
+                    finish();
+                    }
                 }
         );
 

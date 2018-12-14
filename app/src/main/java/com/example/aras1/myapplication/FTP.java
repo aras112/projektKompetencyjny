@@ -14,7 +14,6 @@ import java.io.FileInputStream;
 public class FTP extends AsyncTask<Void, Void, Void>
     {
 
-    private Exception exception;
     private String hostname;
     private String login;
     private String password;
@@ -49,7 +48,7 @@ public class FTP extends AsyncTask<Void, Void, Void>
             client.connect(hostname);
             client.login(login, password);
             client.setFileType(FTPClient.BINARY_FILE_TYPE);
-            client.makeDirectory(directoryPath + "/" + "fiszki" + "/");
+            client.makeDirectory(directoryPath + "/" + "fiszki" + "/" + collectionName + "/");
             client.changeWorkingDirectory("aras.cba.pl/" + "fiszki" + "/" + collectionName + "/");
 
             buffIn = new BufferedInputStream(new FileInputStream(file));
@@ -60,7 +59,7 @@ public class FTP extends AsyncTask<Void, Void, Void>
             }
         catch (Exception e)
             {
-            System.out.println(e.getMessage());
+            Log.e("FTP","FTP error on connect",e);
             }
 
         return null;

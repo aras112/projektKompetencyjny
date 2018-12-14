@@ -25,7 +25,7 @@ public class StatisiticForCollectionController
     private ArrayList<String> list;
     private ListView listView;
     LineChart chart;
-    List<Entry> entries = new ArrayList<Entry>();
+    List<Entry> entries = new ArrayList<>();
     LineDataSet dataSet;
 
     public StatisiticForCollectionController(StatisiticForCollection activity)
@@ -51,8 +51,9 @@ public class StatisiticForCollectionController
             }
 
         dataSet = new LineDataSet(entries, "Punkty");
-        dataSet.setValueTextSize(25);
+        dataSet.setValueTextSize(15);
         dataSet.setLineWidth(5);
+        dataSet.setCircleRadius(10);
         dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         dataSet.enableDashedLine(30, 5, 0);
         LineData lineData = new LineData(dataSet);

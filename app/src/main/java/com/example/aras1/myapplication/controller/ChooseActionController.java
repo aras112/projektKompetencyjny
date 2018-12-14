@@ -7,6 +7,7 @@ import com.example.aras1.myapplication.AddActivity;
 import com.example.aras1.myapplication.BrowseActivity;
 import com.example.aras1.myapplication.ChooseAction;
 import com.example.aras1.myapplication.OpenActivity;
+import com.example.aras1.myapplication.PointsAvgActivity;
 import com.example.aras1.myapplication.R;
 import com.example.aras1.myapplication.StatisticsActivity;
 
@@ -53,7 +54,7 @@ public class ChooseActionController
         statistics.setOnClickListener(
                 (view) ->
                 {
-                Intent newIntent = new Intent(action, StatisticsActivity.class);
+                Intent newIntent = new Intent(action, PointsAvgActivity.class);
                 action.startActivity(newIntent);
                 }
 

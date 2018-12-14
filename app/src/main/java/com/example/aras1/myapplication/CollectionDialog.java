@@ -18,49 +18,58 @@ import com.example.aras1.myapplication.controller.OpenActivityController;
 
 
 @SuppressLint("ValidFragment")
-public class CollectionDialog extends AppCompatDialogFragment {
+public class CollectionDialog extends AppCompatDialogFragment
+    {
     private EditText remoteCollectionName;
     private CollectionDialogListener listener;
     private OpenActivityController activity;
 
 
-    public CollectionDialog(OpenActivityController activity) {
+    public CollectionDialog(OpenActivityController activity)
+        {
         this.activity = activity;
-    }
+        }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(Bundle savedInstanceState)
+        {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.popup_get_collection, null);
         remoteCollectionName = view.findViewById(R.id.remoteCollectionName);
         builder.setView(view)
                 .setTitle("Pobierz koleckcję")
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener()
+                    {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int which)
+                        {
 
-                    }
-                })
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        }
+                    })
+                .setPositiveButton("ok", new DialogInterface.OnClickListener()
+                    {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int which)
+                        {
                         String collectionName = remoteCollectionName.getText().toString();
                         listener.applyText(collectionName);
-                    }
-                });
+                        }
+                    });
 
         return builder.create();
 
-    }
+        }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(Context context)
+        {
         super.onAttach(context);
         listener = (CollectionDialogListener) activity;
-    }
+        }
 
-    public interface CollectionDialogListener {
+    public interface CollectionDialogListener
+        {
         void applyText(String remoteCollectionName);
+        }
     }
-}
