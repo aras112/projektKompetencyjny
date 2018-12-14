@@ -4,11 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +21,8 @@ import android.widget.Toast;
 
 import com.example.aras1.myapplication.BrowseActivity;
 import com.example.aras1.myapplication.CollectionDialog;
+import com.example.aras1.myapplication.FTP;
+import com.example.aras1.myapplication.FTPGet;
 import com.example.aras1.myapplication.FlashcardListAdapter;
 import com.example.aras1.myapplication.OpenActivity;
 import com.example.aras1.myapplication.R;
@@ -26,6 +31,7 @@ import com.example.aras1.myapplication.model.FlashcardItem;
 import java.io.File;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +44,7 @@ public class OpenActivityController extends AppCompatActivity implements Collect
     private FlashcardListAdapter adapter;
     private List<FlashcardItem> flashcardList;
     private Button getCollectionButton;
+    private String path;
 
     public OpenActivityController(OpenActivity activity)
         {
@@ -50,37 +57,14 @@ public class OpenActivityController extends AppCompatActivity implements Collect
         chooseCollectionLabel = activity.findViewById(R.id.chooseCollectionLabel);
         getCollectionButton = activity.findViewById(R.id.getCollectionButton);
         collectionList = activity.findViewById(R.id.collectionList);
-        String path = activity.getFilesDir() + "/" + activity.getString(R.string.app_name);
+        path = activity.getFilesDir() + "/" + activity.getString(R.string.app_name);
         Log.i("plik ", path);
         flashcardList = new ArrayList<>();
 
-        File myDir = new File(path);
-
-        Log.i("plik ", myDir.getName());
-
-        if (myDir.exists())
-            {
-            for (File f : myDir.listFiles())
-                {
-                Log.i("plik ", f.getName());
-                if (f.isFile())
-                    {
-                    String name = f.getName();
-                    Log.i("kolekcja: ", name);
-                    String nameFormatted = name.substring(0, name.length()-4);
-                    Date date = new Date(f.lastModified());
-                    android.text.format.DateFormat df = new android.text.format.DateFormat();
-                    String formattedDate = df.format("yyyy-MM-dd hh:mm:ss a", date).toString();
-                    flashcardList.add(new FlashcardItem(nameFormatted, formattedDate, f));
-                    }
-                }
-            } else
-            {
-            return;
-            }
+            if (initializeList()) return;
 
 
-        adapter = new FlashcardListAdapter(activity, flashcardList);
+            adapter = new FlashcardListAdapter(activity, flashcardList);
 
         collectionList.setAdapter(adapter);
 
@@ -96,6 +80,7 @@ public class OpenActivityController extends AppCompatActivity implements Collect
         });
 
 
+
         getCollectionButton.setOnClickListener(v ->
         {
             openDialog();
@@ -103,6 +88,40 @@ public class OpenActivityController extends AppCompatActivity implements Collect
 
 
 
+        }
+
+        private boolean initializeList() {
+            File myDir = new File(path);
+
+            Log.i("plik ", myDir.getName());
+
+            if (myDir.exists())
+                {
+                for (File f : myDir.listFiles())
+                    {
+                    Log.i("plik ", f.getName());
+                    if (f.isFile())
+                        {
+                        String name = f.getName();
+                        Log.i("kolekcja: ", name);
+                        String nameFormatted = name.substring(0, name.length()-4);
+                        long lastDate = f.lastModified();
+                            String formattedDate = getFormattedDate(lastDate);
+                        flashcardList.add(new FlashcardItem(nameFormatted, formattedDate, f));
+                        }
+                    }
+                } else
+                {
+                    return true;
+                }
+            return false;
+        }
+
+        @NonNull
+        private String getFormattedDate(long lastDate) {
+            Date date = new Date(lastDate);
+            android.text.format.DateFormat df = new android.text.format.DateFormat();
+            return df.format("yyyy-MM-dd hh:mm:ss a", date).toString();
         }
 
         public void openDialog() {
@@ -118,7 +137,30 @@ public class OpenActivityController extends AppCompatActivity implements Collect
         @Override
         public void applyText(String remoteCollectionName) {
         //tutaj zrobić pobieranie kolekcji z serwera po FTP
-            Toast.makeText(activity, "Pobrano kolekcję: " + remoteCollectionName, Toast.LENGTH_SHORT).show();
+
+            String path = activity.getFilesDir() + "/" + activity.getString(R.string.app_name);
+            SharedPreferences sharedPref = activity.getSharedPreferences("defaultFTP.xml", 0);
+            FTPGet ftp = new FTPGet(sharedPref.getString("Custom_hostname", activity.getString(R.string.default_hostname)),
+                    sharedPref.getString("Custom_login", activity.getString(R.string.default_login)),
+                    sharedPref.getString("Custom_password", activity.getString(R.string.default_password)),
+                    sharedPref.getString("Custom_directory", activity.getString(R.string.default_directory)),
+                    path,
+                    remoteCollectionName);
+            ftp.execute();
+
+            File file = new File(path + "/" + remoteCollectionName+ ".xml");
+            if(file.length() != 0) {
+                Date date = new Date();
+                String formattedName = getFormattedDate(date.getTime());
+                adapter.add(new FlashcardItem(remoteCollectionName, formattedName, file));
+                adapter.notifyDataSetChanged();
+
+                Toast.makeText(activity, "Pobrano kolekcję: " + remoteCollectionName, Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(activity, "Nie ma takiej kolekcji", Toast.LENGTH_SHORT).show();
+            }
         }
 
     }
